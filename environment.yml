@@ -1,0 +1,11 @@
+name: base
+channels:
+  - conda-forge
+  - ome
+dependencies:
+  - black
+  - ca-certificates
+  - omero-py
+  - openssl
+  - python=3.9
+  - zeroc-ice36-python
