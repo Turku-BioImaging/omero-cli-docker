@@ -15,7 +15,7 @@ if ([string]::IsNullOrWhiteSpace($port)) {
     $port = "4064"
 }
 
-# docker pull ghcr.io/turku-bioimaging/omero-cli-docker:0.1.0
-docker run --mount "type=bind,source=$(Get-Location)/to_upload,target=/upload" -it omero-cli-docker /bin/bash -c "omero login $username@${server}:${port} -w ${password}; omero import /upload"
+docker pull ghcr.io/turku-bioimaging/omero-cli-docker:0.1.0
+docker run --mount "type=bind,source=$(Get-Location)/to_upload,target=/upload" -it ghcr.io/turku-bioimaging/omero-cli-docker:0.1.0 /bin/bash -c "omero login $username@${server}:${port} -w ${password}; omero import /upload"
 
 # docker run -it  omero-cli-docker omero group list
