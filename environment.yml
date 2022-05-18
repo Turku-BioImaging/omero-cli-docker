@@ -7,5 +7,6 @@ dependencies:
   - ca-certificates
   - omero-py
   - openssl
+  - openjdk=11
   - python=3.9
   - zeroc-ice36-python
