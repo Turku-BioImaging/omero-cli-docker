@@ -16,5 +16,21 @@ if ([string]::IsNullOrWhiteSpace($port)) {
     $port = "4064"
 }
 
+Function Get-Folder($initialDirectory = "") {
+    [System.Reflection.Assembly]::LoadWithPartialName("System.windows.forms") | Out-Null
+
+    $foldername = New-Object System.Windows.Forms.FolderBrowserDialog
+    $foldername.Description = "Select a folder to upload..."
+    $foldername.rootfolder = "MyComputer"
+    $foldername.SelectedPath = $initialDirectory
+
+    if ($foldername.ShowDialog() -eq "OK") {
+        $folder += $foldername.SelectedPath
+    }
+    return $folder
+}
+
+$uploadPath = Get-Folder
+
 docker pull ghcr.io/turku-bioimaging/omero-cli-docker:0.1.0
-docker run --mount "type=bind,source=$(Get-Location)/to_upload,target=/upload" -it ghcr.io/turku-bioimaging/omero-cli-docker:0.1.0 /bin/bash -c "omero login $username@${server}:${port} -w ${clearTextPassword}; omero import /upload"
+docker run --mount "type=bind,source=${uploadPath},target=/upload" -it ghcr.io/turku-bioimaging/omero-cli-docker:0.1.0 /bin/bash -c "omero login $username@${server}:${port} -w ${clearTextPassword}; omero import /upload"
